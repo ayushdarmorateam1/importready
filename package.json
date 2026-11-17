@@ -1,0 +1,45 @@
+{
+  "name": "@ayushdarmorateam1/importready",
+  "version": "0.1.0",
+  "description": "Check CSV imports locally, preview deliberate repairs, and export an understandable report.",
+  "type": "module",
+  "license": "MIT",
+  "private": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": "./src/core.mjs",
+  "bin": {
+    "importready": "./bin/importready.mjs"
+  },
+  "files": [
+    "src",
+    "bin",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "start": "node scripts/serve.mjs",
+    "dev": "node scripts/serve.mjs",
+    "check": "node bin/importready.mjs examples/clean.csv"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ayushdarmorateam1/importready.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ayushdarmorateam1/importready/issues"
+  },
+  "homepage": "https://ayushdarmorateam1.github.io/importready/",
+  "funding": "https://github.com/sponsors/ayushdarmorateam1",
+  "keywords": [
+    "csv",
+    "validation",
+    "data-quality",
+    "data-import",
+    "local-first",
+    "cli"
+  ]
+}

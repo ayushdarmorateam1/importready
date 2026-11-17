@@ -1,0 +1,6 @@
+[
+  { "column": "customer_id", "required": true, "unique": true, "type": "text" },
+  { "column": "name", "required": true },
+  { "column": "email", "required": true, "type": "email" },
+  { "column": "joined", "type": "date" }
+]

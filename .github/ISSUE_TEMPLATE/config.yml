@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Usage and scoped service inquiries
+    url: https://github.com/ayushdarmorateam1/importready/blob/main/SUPPORT.md
+    about: Read the support guide before opening a service inquiry. Share only non-confidential context.
+  - name: Security reporting
+    url: https://github.com/ayushdarmorateam1/importready/blob/main/SECURITY.md
+    about: Follow the security policy instead of disclosing vulnerabilities in a public issue.

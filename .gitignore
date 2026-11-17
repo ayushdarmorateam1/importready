@@ -1,0 +1,9 @@
+node_modules/
+.importready-test-*/
+.DS_Store
+coverage/
+*.tgz
+*.log
+.env
+.env.*
+!.env.example

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Check CSV files before your next import. Find malformed rows, duplicates and validation issues, preview selected fixes, and export locally. Free and open source.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="theme-color" content="#103e40">
+  <title>ImportReady — Good data. Smoother imports.</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23103e40'/%3E%3Cpath d='M17 21h30M17 32h16M17 43h10' stroke='%23b5ead3' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='m36 40 6 6 10-13' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./web/styles.css">
+  <script type="module" src="./web/app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to CSV checker</a>
+  <header class="site-header shell">
+    <a class="brand" href="./" aria-label="ImportReady home">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="12" fill="currentColor"/><path d="M10 13h20M10 20h10M10 27h6" stroke="#b5ead3" stroke-width="3" stroke-linecap="round"/><path d="m22 25 4 4 7-9" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>ImportReady<span class="brand-dot">.</span></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a class="nav-link" href="https://github.com/ayushdarmorateam1/importready" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <a class="button button-small button-outline" href="https://github.com/ayushdarmorateam1/importready/blob/main/SUPPORT.md" target="_blank" rel="noopener noreferrer">Support development <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> YOUR CSV, READY FOR ITS NEXT STOP</p>
+        <h1 id="page-title">Good data.<br><span>Smoother imports.</span></h1>
+        <p class="hero-copy">Catch problems before they become failed imports.<br class="desktop-break"> Inspect your CSV, choose your fixes, and move forward.</p>
+      </div>
+      <div class="privacy-note">
+        <div class="privacy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z"/><path d="m8 12 3 3 5-6"/></svg></div>
+        <div><strong>Your files stay with you.</strong><p>Processing happens in this browser.<br>No uploads. No account. No API keys.</p><span class="small-label">FREE & OPEN SOURCE</span></div>
+      </div>
+    </section>
+
+    <div id="notice" class="notice" role="status" hidden></div>
+    <div id="workspace" class="workspace" tabindex="-1">
+      <aside class="sidebar" aria-label="File and validation controls">
+        <section class="panel input-panel" aria-labelledby="input-title">
+          <div class="section-heading"><span class="step-number">01</span><h2 id="input-title">Choose your data</h2></div>
+          <div id="drop-zone" class="drop-zone">
+            <svg class="upload-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11l7 7v17H7V4Z"/><path d="M18 4v7h7M11 17h10M11 22h7"/></svg>
+            <strong>Drop a CSV here</strong>
+            <p>or choose one from your device</p>
+            <button id="browse-file" class="button button-primary" type="button">Choose a file <span aria-hidden="true">↑</span></button>
+            <input id="csv-file" class="visually-hidden" type="file" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" aria-label="Choose a CSV, TSV or text file">
+            <span class="file-limit">CSV, TSV or TXT · UTF-8 · up to 5 MiB</span>
+          </div>
+          <button id="load-demo" class="text-button demo-button" type="button"><span aria-hidden="true">✦</span> Try the example dataset</button>
+          <details class="paste-details">
+            <summary>Paste CSV text instead <span aria-hidden="true">+</span></summary>
+            <form id="paste-form">
+              <label class="visually-hidden" for="csv-text">CSV text to check</label>
+              <textarea id="csv-text" rows="6" spellcheck="false" placeholder="id,name,email&#10;001,Ada,ada@example.com"></textarea>
+              <button class="button button-primary button-full" type="submit">Check pasted data <span aria-hidden="true">→</span></button>
+            </form>
+          </details>
+          <div class="settings">
+            <label for="delimiter">Separator</label>
+            <select id="delimiter"><option value="auto">Detect automatically</option><option value=",">Comma (,)</option><option value=";">Semicolon (;)</option><option value="tab">Tab (↹)</option><option value="|">Pipe (|)</option></select>
+            <label class="check-label header-toggle"><input id="has-header" type="checkbox" checked><span>First row contains column names</span></label>
+          </div>
+        </section>
+
+        <section class="panel rules-panel" aria-labelledby="rules-title">
+          <div class="section-heading"><span class="step-number">02</span><h2 id="rules-title">Set your rules</h2><span id="rule-count" class="count-badge">0</span></div>
+          <p class="section-copy">Add checks that match your destination.</p>
+          <form id="rule-form">
+            <label for="rule-column">Column</label><select id="rule-column" required></select>
+            <label for="rule-type">Expected value</label><select id="rule-type"><option value="text">Any text</option><option value="email">Email address</option><option value="number">Number</option><option value="date">Date · YYYY-MM-DD</option></select>
+            <div class="rule-flags"><label class="check-label"><input id="rule-required" type="checkbox"><span>Required</span></label><label class="check-label"><input id="rule-unique" type="checkbox"><span>Unique</span></label></div>
+            <button id="save-rule" class="button button-outline button-full" type="submit">Add / update rule <span aria-hidden="true">+</span></button>
+          </form>
+          <p id="rule-limit-note" class="field-note" hidden></p>
+          <div id="active-rules" class="active-rules" aria-label="Active validation rules"></div>
+          <button id="clear-rules" class="text-button clear-rules" type="button" disabled>Clear all rules</button>
+        </section>
+      </aside>
+
+      <div class="results-column" id="results" aria-busy="false">
+        <section aria-labelledby="overview-title">
+          <div class="results-heading"><div><p class="eyebrow small-eyebrow">YOUR WORKSPACE</p><h2 id="overview-title">A clearer view of your data.</h2></div><span id="dataset-badge" class="dataset-badge">Example dataset</span></div>
+          <div class="file-heading"><span id="file-name">example-contacts.csv</span><span id="file-details">Ready to inspect</span></div>
+          <div class="metrics" aria-live="polite" aria-atomic="true">
+            <div class="metric"><span>Data rows</span><strong id="stat-rows">—</strong><small>excluding the header</small></div>
+            <div class="metric"><span>Columns</span><strong id="stat-columns">—</strong><small id="detected-delimiter">separator not checked</small></div>
+            <div class="metric metric-errors"><span><i class="metric-dot" aria-hidden="true"></i> Errors</span><strong id="stat-errors">—</strong><small>need your attention</small></div>
+            <div class="metric metric-warnings"><span><i class="metric-dot" aria-hidden="true"></i> Warnings</span><strong id="stat-warnings">—</strong><small>worth a closer look</small></div>
+          </div>
+        </section>
+
+        <section class="panel preview-panel" aria-label="Data and diagnostics">
+          <div class="preview-toolbar">
+            <div class="tabs" role="tablist" aria-label="Choose a data view">
+              <button id="tab-original" class="tab active" role="tab" aria-selected="true" aria-controls="data-panel" type="button" data-view="original">Original</button>
+              <button id="tab-cleaned" class="tab" role="tab" aria-selected="false" aria-controls="data-panel" tabindex="-1" type="button" data-view="cleaned">After selected fixes</button>
+              <button id="tab-issues" class="tab" role="tab" aria-selected="false" aria-controls="data-panel" tabindex="-1" type="button" data-view="issues">Issues <span id="issues-count" class="tab-count">0</span></button>
+            </div>
+            <button id="download-report" class="text-button report-button" type="button" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m-3-3 3 3 3-3M4 13v3h12v-3"/></svg> Report</button>
+          </div>
+          <div id="data-panel" role="tabpanel" aria-labelledby="tab-original" tabindex="0">
+            <div id="issue-view-controls" class="issue-view-controls" hidden><label for="issue-scope">Review issues in</label><select id="issue-scope"><option value="original">Original file</option><option value="cleaned">After selected fixes</option></select></div>
+            <div id="preview-container" class="table-scroll"><div class="empty-state"><strong>Your preview will appear here.</strong><p>Choose a file, paste data, or try the example.</p></div></div>
+            <div class="preview-footer"><span id="preview-caption">Values stay as text. Leading zeros are preserved.</span><span class="local-chip"><span class="status-dot" aria-hidden="true"></span> LOCAL ONLY</span></div>
+          </div>
+        </section>
+
+        <section class="panel cleanup-panel" aria-labelledby="cleanup-title">
+          <div class="cleanup-header"><div class="section-heading"><span class="step-number">03</span><h2 id="cleanup-title">Choose changes. Keep control.</h2></div><span class="optional-label">ALL OPTIONAL</span></div>
+          <p class="section-copy cleanup-copy">Nothing is changed until you select it. Preview the result before downloading.</p>
+          <div class="cleanup-layout">
+            <div class="cleanup-options">
+              <label class="repair-option"><input id="fix-trim" type="checkbox"><span><strong>Trim surrounding spaces</strong><small>Remove whitespace around cell values and headers.</small></span></label>
+              <label class="repair-option"><input id="fix-blank" type="checkbox"><span><strong>Remove blank rows</strong><small>Drop records containing only empty or whitespace values.</small></span></label>
+              <label class="repair-option"><input id="fix-duplicate" type="checkbox"><span><strong>Remove exact duplicates</strong><small>Keep the first matching row. Applied after trimming.</small></span></label>
+              <label class="repair-option"><input id="fix-formula" type="checkbox"><span><strong>Guard spreadsheet formulas</strong><small>Prefix risky cells with an apostrophe; this changes their values.</small></span></label>
+            </div>
+            <div class="export-summary">
+              <span class="small-label">SELECTED CHANGES</span>
+              <div id="change-summary" class="change-summary"><p>No changes selected.</p></div>
+              <div id="after-status" class="after-status" aria-live="polite">Load a dataset to see the result.</div>
+              <button id="download-csv" class="button button-primary button-full" type="button" disabled>Download cleaned CSV <span aria-hidden="true">↓</span></button>
+              <p class="export-note">Your original file stays untouched.</p>
+            </div>
+          </div>
+          <div id="export-blocked" class="blocked-message" role="status" hidden></div>
+        </section>
+
+        <section class="service-note" aria-label="Custom import support"><div><strong>Need a custom import workflow?</strong><p>Ask about custom validation rules, mappings, or integration help.</p></div><a href="https://github.com/ayushdarmorateam1/importready/blob/main/SUPPORT.md" target="_blank" rel="noopener noreferrer">Explore support <span aria-hidden="true">↗</span></a></section>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer shell"><div><a href="https://github.com/ayushdarmorateam1/importready/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT licensed</a><span>·</span><a href="https://github.com/ayushdarmorateam1/importready" target="_blank" rel="noopener noreferrer">Source code & CLI</a></div><p>Preflight checks help you find problems. Review the exported file against your destination’s requirements.</p><p class="footer-detail">UTF-8 CSV · Up to 50,000 data rows · File data is not uploaded or saved by this app</p></footer>
+  <noscript><div class="noscript-notice">ImportReady needs JavaScript to inspect CSV files locally. Enable JavaScript or use the command-line tool from GitHub.</div></noscript>
+</body>
+</html>

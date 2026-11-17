@@ -1,0 +1,34 @@
+name: Feature request
+description: Describe an import problem and a focused improvement.
+title: "Feature: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Start with the problem and a synthetic example. Please keep confidential information out of public issues. For a scoped service inquiry, use a blank issue and follow SUPPORT.md.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What import problem are you trying to solve?
+      description: Describe the workflow, how often it occurs, and its impact without sensitive details.
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current workaround
+      description: What do you do today, and what is difficult about it?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed improvement
+      description: Include a small synthetic example and the desired result if possible.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Constraints or alternatives
+      description: File sizes, browser/CLI needs, compatibility concerns, or smaller alternatives.

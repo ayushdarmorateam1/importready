@@ -1,0 +1,7 @@
+customer_id,name,email,joined,notes
+00101, Ada Example , ada@example.com ,2026-01-15, Newsletter subscriber 
+00102,Ravi Example,ravi-at-example.com,2026-02-20,Check email spelling
+00103,Sam Example,sam@example.com,2026-03-05,=SUM(1;2)
+00103,Sam Example,sam@example.com,2026-03-05,=SUM(1;2)
+,,,,
+00104,Lee Example,lee@example.com,2026-02-30,Impossible date
