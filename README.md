@@ -6,11 +6,15 @@ ImportReady checks CSV files on your machine, explains problems by line and colu
 
 **No uploads · No API keys · No telemetry · No runtime dependencies**
 
+**[Try the live demo →](https://ayushdarmorateam1.github.io/importready/)**
+
 [Quick start](#quick-start) · [Checks and repairs](#checks-and-repairs) · [CLI](#command-line) · [JavaScript API](#javascript-api) · [Support](SUPPORT.md)
+
+![ImportReady browser app](docs/preview.jpg)
 
 ## Quick start
 
-Clone the project and use **Node.js 20 or later**. No dependency installation is needed.
+The live demo runs directly in your browser. To run the project locally, clone it and use **Node.js 20 or later**. No dependency installation is needed.
 
 ```sh
 git clone https://github.com/ayushdarmorateam1/importready.git
@@ -153,3 +157,7 @@ Useful contributions include small reproducible CSV fixtures, clearer diagnostic
 For an issue or a scoped custom-rule, mapping, or integration request, see [SUPPORT.md](SUPPORT.md). The software remains free under the [MIT license](LICENSE). Sponsorship, when available, supports maintenance, tests, and documentation.
 
 ImportReady was developed with AI assistance. Contributions are judged by their behavior, readable implementation, reproducible examples, and meaningful tests.
+
+### Getting paid
+
+For the maintainer, the [revenue experiment plan](docs/REVENUE_PLAN.md) outlines small, separately quoted service pilots, demand checks, and optional sponsorship. Revenue depends on finding customers and supporters.
